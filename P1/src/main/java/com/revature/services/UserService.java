@@ -32,6 +32,9 @@ public class UserService {
 
     public List<OutgoingUserDTO> getAllUsers(){
 
+
+        //TODO: Create functionality where only managers can get all users
+
         // Populate a list with all users, .findAll() returns all records in a table
         List<User> users = uDAO.findAll();
 
@@ -45,6 +48,25 @@ public class UserService {
 
         // Return each user with all info except password
         return outUsers;
+    }
+
+    public User deleteUserById(int userId){
+        //TODO: Create  manager functionality
+
+        User userToDelete = uDAO.findById(userId).orElseThrow(() -> new IllegalArgumentException("No user found with id: " + userId));
+
+        uDAO.deleteById(userId);
+
+        return userToDelete;
+    }
+
+    public User updateUserRole(int userId){
+        //TODO: Create Manager functionality
+
+        User u = uDAO.findById(userId).orElseThrow(() -> new IllegalArgumentException("No user found with id: " + userId));
+
+        u.setRole("manager");
+        return uDAO.save(u); // save allows us to save and return an object
     }
 
 

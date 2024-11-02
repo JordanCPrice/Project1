@@ -17,4 +17,6 @@ public interface ReimbursementDAO extends JpaRepository<Reimbursement, Integer> 
     public List<Reimbursement> findByUserUserIdAndStatus(int userId, String status);
 
     public Reimbursement findByUserUserIdAndReimbId(int userId, int reimbID);
+
+    public Reimbursement findByStatus(String status);
 }

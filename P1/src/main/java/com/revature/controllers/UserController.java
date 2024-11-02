@@ -36,11 +36,18 @@ public class UserController {
     @GetMapping // Get request to /users will come here
     public ResponseEntity<List<OutgoingUserDTO>> getAllUsers(){
 
-       //TODO: Create functionality where only managers can get all users
-
        List<OutgoingUserDTO> allUsers = uService.getAllUsers();
 
        return ResponseEntity.ok(allUsers);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<User> deleteByUserId(@PathVariable int userId){
+       return ResponseEntity.ok(uService.deleteUserById(userId));
+    }
+    @PatchMapping("/{userId}")
+    public ResponseEntity<User> updateUserRole(@PathVariable int userId){
+       return ResponseEntity.status(202).body(uService.updateUserRole(userId));
     }
 
 

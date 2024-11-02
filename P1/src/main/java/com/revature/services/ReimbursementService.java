@@ -7,7 +7,6 @@ import com.revature.models.Reimbursement;
 import com.revature.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ public class ReimbursementService {
         //ReimbursementID will be generated so 0 is just a placeholder
         //Description, amount, status all come from the reimbursementDTO
         // UserId will be set with the userID n the DTO
-        Reimbursement newReimbursement = new Reimbursement(0, reimbursementDTO.getDescription(),reimbursementDTO.getAmount(),reimbursementDTO.getStatus(), null);
+        Reimbursement newReimbursement = new Reimbursement(0, reimbursementDTO.getDescription(),reimbursementDTO.getAmount(),"PENDING", null);
 
         // Get user by UserId
         Optional<User> u = uDAO.findById(reimbursementDTO.getUserId());
@@ -57,8 +56,18 @@ public class ReimbursementService {
     }
     public List<Reimbursement> getReimbursementByUserIdAndStatus(int userId, String status){
 
+        List<Reimbursement> allReimbursements = rDAO.findAll();
+
+        List<Reimbursement> statusReimbursements = new ArrayList<>();
+
+        for (Reimbursement r : allReimbursements){
+            if(r.getStatus().equalsIgnoreCase(status)){
+                statusReimbursements.add(r);
+            }
+        }
+
         //TODO: error handling
-        return rDAO.findByUserUserIdAndStatus(userId, status);
+        return statusReimbursements;
     }
     public Reimbursement updateDescription(int userId, int reimbId, String newDescription){
 
@@ -66,13 +75,46 @@ public class ReimbursementService {
 
         Reimbursement r = rDAO.findByUserUserIdAndReimbId(userId, reimbId);
 
-        if (r.getStatus().contains("pending")){
+        if (r.getStatus().equalsIgnoreCase("pending")){
             r.setDescription(newDescription);
             rDAO.save(r);
             return r;
         }else{
             throw new IllegalArgumentException("This reimbursement is not currently pending");
         }
+    }
+
+    public List<Reimbursement> getAllReimbursements(){
+
+        //TODO: ADD FUNCTIONALITY TO CHECK IF USER IS A MANAGER
+
+        return rDAO.findAll();
+    }
+
+    public List<Reimbursement> getPendingReimbursement(){
+
+        //TODO: Add manager functionality
+
+        List<Reimbursement> allReimbursements = rDAO.findAll();
+
+        List<Reimbursement> pendingReimbursements = new ArrayList<>();
+
+        for (Reimbursement r : allReimbursements){
+            if(r.getStatus().equalsIgnoreCase("pending")){
+                pendingReimbursements.add(r);
+            }
+        }
+        return pendingReimbursements;
+    }
+
+    public Reimbursement updateReimbursementStatus(int reimbId, String status){
+
+        //TODO: add manager functionality
+
+        Reimbursement r = rDAO.findById(reimbId).orElseThrow(() -> new IllegalArgumentException("No reimbursement found with id: " + reimbId));
+
+        r.setStatus(status.toUpperCase());
+        return rDAO.save(r);
     }
 
 
