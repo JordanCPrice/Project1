@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom"
 
 export const Register:React.FC = () => {
 
-    const navigate = useNavigate()
-
 
     const [user, setUser] = useState({
         username:"",
@@ -16,6 +14,8 @@ export const Register:React.FC = () => {
         firstName:"",
         lastName:""
     })
+
+    const navigate = useNavigate()
 
     // Function to store values when an input box changes
     const storeValues = (input:any) => {

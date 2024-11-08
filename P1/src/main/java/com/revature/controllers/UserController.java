@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController // combines @Controller (1 of the 4 stereotype annotations and ResponseBody (allows us to convert Responses to JSON)
 @RequestMapping("/users") // any HTTP requests with "/users" path will be directed here
+@CrossOrigin // Allows for cross-origin-resource-sharing from any source
 public class UserController {
 
    private UserService uService;
