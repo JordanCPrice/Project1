@@ -12,11 +12,11 @@ public class OutgoingUserDTO {
     public OutgoingUserDTO() {
     }
 
-    public OutgoingUserDTO(int userId, String firstName, String username, String lastName, String role) {
+    public OutgoingUserDTO(int userId, String firstName, String lastName, String username, String role) {
         this.userId = userId;
         this.firstName = firstName;
-        this.username = username;
         this.lastName = lastName;
+        this.username = username;
         this.role = role;
     }
 
