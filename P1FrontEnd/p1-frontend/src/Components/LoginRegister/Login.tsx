@@ -50,7 +50,7 @@ export const Login:React.FC = () => {
                 if (store.loggedInUser.role === "manager"){
                     navigate("/users")
                 } else{
-                    navigate("/reimbursements")
+                    navigate("/employee")
                 }
             }
         )

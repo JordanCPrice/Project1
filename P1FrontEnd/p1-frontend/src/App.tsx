@@ -7,6 +7,7 @@ import { User } from './Components/User/User';
 import { ListReimbursements } from './Components/User/ListReimbursements';
 import { ListUsers } from './Components/User/ListUsers';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Employee } from './Components/User/Employee';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/users" element={<User/>} />
           <Route path="/list-users" element={<ListUsers/>} />
           <Route path="/list-reimbursements" element={<ListReimbursements/>} />
+          <Route path="/employee" element={<Employee/>} />
       </Routes>
       </BrowserRouter>
     </div>

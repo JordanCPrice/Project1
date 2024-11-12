@@ -1,6 +1,7 @@
 package com.revature.controllers;
 
 import com.revature.aspects.AdminOnly;
+import com.revature.models.DTOs.DescriptionUpdateDTO;
 import com.revature.models.DTOs.IncomingReimbursementDTO;
 import com.revature.models.Reimbursement;
 import com.revature.services.ReimbursementService;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ReimbursementController {
 
     private ReimbursementService rService;
+
 
     @Autowired
     public ReimbursementController(ReimbursementService rService) {
@@ -52,8 +54,8 @@ public class ReimbursementController {
     }
 
     @PatchMapping("/user/{userId}/reimbursement/{reimbId}")
-    public ResponseEntity<Reimbursement> updateReimbursementDescription(@PathVariable int userId, @PathVariable int reimbId, @RequestBody String newDescription){
-        return  ResponseEntity.status(202).body(rService.updateDescription(userId,reimbId,newDescription));
+    public ResponseEntity<Reimbursement> updateReimbursementDescription(@PathVariable int userId, @PathVariable int reimbId, @RequestBody DescriptionUpdateDTO newDescription){
+        return  ResponseEntity.status(202).body(rService.updateDescription(userId,reimbId,newDescription.getDescription()));
     }
     @PatchMapping("/{reimbId}")
     public ResponseEntity<Reimbursement> updateReimbursementStatus(@PathVariable int reimbId, @RequestBody String status){
