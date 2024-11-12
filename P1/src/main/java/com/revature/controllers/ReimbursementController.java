@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import com.revature.aspects.AdminOnly;
 import com.revature.models.DTOs.IncomingReimbursementDTO;
 import com.revature.models.Reimbursement;
 import com.revature.services.ReimbursementService;
@@ -21,6 +22,7 @@ public class ReimbursementController {
         this.rService = rService;
     }
 
+    @AdminOnly
     @GetMapping
     public ResponseEntity<List<Reimbursement>> getAllReimbursements(){
         return ResponseEntity.ok(rService.getAllReimbursements());

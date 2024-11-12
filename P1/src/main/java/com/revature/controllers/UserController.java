@@ -1,5 +1,6 @@
 package com.revature.controllers;
 
+import com.revature.aspects.AdminOnly;
 import com.revature.models.DTOs.OutgoingUserDTO;
 import com.revature.models.User;
 import com.revature.services.UserService;
@@ -34,6 +35,7 @@ public class UserController {
     }
 
     // Get request to  get all users
+    @AdminOnly
     @GetMapping // Get request to /users will come here
     public ResponseEntity<List<OutgoingUserDTO>> getAllUsers(){
 
@@ -42,10 +44,12 @@ public class UserController {
        return ResponseEntity.ok(allUsers);
     }
 
+    @AdminOnly // Only managers can do this (see AuthAspect)
     @DeleteMapping("/{userId}")
     public ResponseEntity<User> deleteByUserId(@PathVariable int userId){
        return ResponseEntity.ok(uService.deleteUserById(userId));
     }
+    @AdminOnly
     @PatchMapping("/{userId}")
     public ResponseEntity<User> updateUserRole(@PathVariable int userId){
        return ResponseEntity.status(202).body(uService.updateUserRole(userId));

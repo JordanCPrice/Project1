@@ -21,7 +21,7 @@ export const Register:React.FC = () => {
     const storeValues = (input:any) => {
         
         const name = input.target.name // the name of the input box that changed (username, password, firstName,lastName fields)
-        const value = input.value.name // the value in the input box
+        const value = input.target.value // the value in the input box
 
         //input = the entire event (which got passed in as an argument)
         //target = the specfic input box that triggereed the onChange event
