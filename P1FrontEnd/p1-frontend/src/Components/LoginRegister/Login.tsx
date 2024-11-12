@@ -46,8 +46,12 @@ export const Login:React.FC = () => {
                 // saving the logged in user data globally
                 store.loggedInUser = response.data
 
-                //navigate to /pets 
-                navigate("/reimbursements")
+                //navigate to component based on role
+                if (store.loggedInUser.role === "manager"){
+                    navigate("/users")
+                } else{
+                    navigate("/reimbursements")
+                }
             }
         )
         .catch((error)=>{
@@ -67,7 +71,7 @@ export const Login:React.FC = () => {
         /*Bootstrap gives us this Container element that does some default padding and centering*/
         <Container> 
 
-            <h1>?????????????????????</h1>
+            <h1>Employee Reimbursement System (ERS)</h1>
                 <h3>Please Log In:</h3>
                 
                 <div>

@@ -43,6 +43,15 @@ export const Register:React.FC = () => {
         
     }
 
+    //Used so when you register a new employee you dont have to manually navigate back after registering
+    const handleButtonClick = async () => {
+        // 1. Execute the register method
+        await register();
+    
+        // 2. After registration, navigate to the next page
+        navigate("/");  
+      }
+
 
     return(
 
@@ -87,7 +96,7 @@ export const Register:React.FC = () => {
                 </div>
 
                 <div>
-                    <Button className="btn-success m-1" onClick={register}>Register</Button>
+                    <Button className="btn-success m-1" onClick={handleButtonClick}>Register</Button>
                     <Button className="btn-dark" onClick={()=>navigate("/")}>Back</Button>
                 </div>
             </div>

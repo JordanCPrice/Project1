@@ -1,10 +1,12 @@
 package com.revature.services;
 
+import com.revature.aspects.AdminOnly;
 import com.revature.daos.ReimbursementDAO;
 import com.revature.daos.UserDAO;
 import com.revature.models.DTOs.IncomingReimbursementDTO;
 import com.revature.models.Reimbursement;
 import com.revature.models.User;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,17 +85,16 @@ public class ReimbursementService {
             throw new IllegalArgumentException("This reimbursement is not currently pending");
         }
     }
-
+    @AdminOnly
     public List<Reimbursement> getAllReimbursements(){
 
-        //TODO: ADD FUNCTIONALITY TO CHECK IF USER IS A MANAGER
 
         return rDAO.findAll();
     }
 
+    @AdminOnly
     public List<Reimbursement> getPendingReimbursement(){
 
-        //TODO: Add manager functionality
 
         List<Reimbursement> allReimbursements = rDAO.findAll();
 
@@ -107,14 +108,23 @@ public class ReimbursementService {
         return pendingReimbursements;
     }
 
+    @AdminOnly
     public Reimbursement updateReimbursementStatus(int reimbId, String status){
 
-        //TODO: add manager functionality
+        // Find the reimbursement by ID
+        Optional<Reimbursement> reimbursementOptional = rDAO.findById(reimbId);
 
-        Reimbursement r = rDAO.findById(reimbId).orElseThrow(() -> new IllegalArgumentException("No reimbursement found with id: " + reimbId));
+        if (reimbursementOptional.isPresent()) {
+            Reimbursement reimbursement = reimbursementOptional.get();
 
-        r.setStatus(status.toUpperCase());
-        return rDAO.save(r);
+            // Update the status of the reimbursement
+            reimbursement.setStatus(status);
+
+            // Save the updated reimbursement back to the database
+            return rDAO.save(reimbursement);
+        } else {
+            throw new EntityNotFoundException("Reimbursement not found");
+        }
     }
 
 
